@@ -27,48 +27,47 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 @RequestMapping("/api/users")
 @Tag(name = "Users API")
 public class UserController {
-	private UserService userService; 
+	private UserService userService;
 
 	public UserController(UserService userService) {
 		super();
 		this.userService = userService;
 	}
-	
+
 	@GetMapping
 	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "List all Users", security = {@SecurityRequirement(name = "token")})
+	@Operation(summary = "List all Users", security = { @SecurityRequirement(name = "token") })
 	public List<MinimalUserDto> getAllCourse() {
 		return userService.listAllUsers();
 	}
-	
+
 	@GetMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "Get a user by id", security = {@SecurityRequirement(name = "token")})
+	@Operation(summary = "Get a user by id", security = { @SecurityRequirement(name = "token") })
 	public MinimalUserDto getCourseById(@PathVariable final Integer id) {
 		return userService.getUserById(id);
 	}
-	
+
 	@PostMapping
 	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "Create a new user", security = {@SecurityRequirement(name = "token")})
+	@Operation(summary = "Create a new user", security = { @SecurityRequirement(name = "token") })
 	public MinimalUserDto createUser(@Valid @RequestBody CreateMinimalUserDto createMinimalUserDto) {
 		return userService.createUser(createMinimalUserDto);
 	}
-	
+
 	@PutMapping(value = "/{id}")
 	@ResponseStatus(HttpStatus.OK)
-	@Operation(summary = "Updating an existing user", security = {@SecurityRequirement(name = "token")})
+	@Operation(summary = "Updating an existing user", security = { @SecurityRequirement(name = "token") })
 	public MinimalUserDto updateUser(
-			@PathVariable final Integer id, 
-			@Valid @RequestBody CreateMinimalUserDto createMinimalUserDto
-	) {
+			@PathVariable final Integer id,
+			@Valid @RequestBody CreateMinimalUserDto createMinimalUserDto) {
 		return userService.updateCourse(id, createMinimalUserDto);
 	}
-	
-	@DeleteMapping(value= "/{id}")
-    @ResponseStatus(HttpStatus.OK)
-    @Operation(summary = "Delete an existing user" ,security = {@SecurityRequirement(name = "token")})
-    public void deleteUser(@PathVariable final Integer id) {
-    	userService.deleteUser(id);
-    }
+
+	@DeleteMapping(value = "/{id}")
+	@ResponseStatus(HttpStatus.OK)
+	@Operation(summary = "Delete an existing user", security = { @SecurityRequirement(name = "token") })
+	public void deleteUser(@PathVariable final Integer id) {
+		userService.deleteUser(id);
+	}
 }
